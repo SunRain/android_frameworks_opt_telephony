@@ -211,4 +211,34 @@ public interface IccCard {
      * @return true if a ICC card is present
      */
     public boolean hasIccCard();
+
+    /*
+      *********************************************************
+      WARNING: BIG UGLY HACK! THIS IS A COPY OF IccCardConstants.State
+      KEEP IT IN SYNC OR BAD THINGS HAPPEN
+      *********************************************************
+      UNKNOWN is a transient state, for example, after uesr inputs ICC pin under
+      PIN_REQUIRED state, the query for ICC status returns UNKNOWN before it
+      turns to READY
+     */
+    public enum State {
+        UNKNOWN,
+        ABSENT,
+        PIN_REQUIRED,
+        PUK_REQUIRED,
+        NETWORK_LOCKED,
+        READY,
+        NOT_READY,
+        PERM_DISABLED;
+
+        public boolean isPinLocked() {
+            return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED));
+        }
+
+        public boolean iccCardExist() {
+            return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED)
+                    || (this == NETWORK_LOCKED) || (this == READY)
+                    || (this == PERM_DISABLED));
+        }
+    }
 }
