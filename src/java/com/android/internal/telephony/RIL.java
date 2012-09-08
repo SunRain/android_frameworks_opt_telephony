@@ -1662,9 +1662,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                             Message response) {
         RILRequest rr = RILRequest.obtain(RIL_REQUEST_QUERY_FACILITY_LOCK, response);
 
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                                                 + " [" + facility + " " + serviceClass
-                                                 + " " + appId + "]");
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
         // count strings
         rr.mp.writeInt(4);
@@ -1693,9 +1691,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
          RILRequest rr
                 = RILRequest.obtain(RIL_REQUEST_SET_FACILITY_LOCK, response);
 
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                                                        + " [" + facility + " " + lockState
-                                                        + " " + serviceClass + " " + appId + "]");
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
         // count strings
         rr.mp.writeInt(5);
