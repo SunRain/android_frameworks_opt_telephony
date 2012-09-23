@@ -46,6 +46,7 @@ import com.android.internal.telephony.uicc.UiccCardApplication;
 import com.android.internal.telephony.uicc.UiccController;
 import com.android.internal.telephony.uicc.UsimServiceTable;
 import com.android.internal.telephony.uicc.IccCardApplicationStatus.AppState;
+import com.android.internal.telephony.uicc.IccCardApplicationStatus.AppType;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -683,6 +684,14 @@ public abstract class PhoneBase extends Handler implements Phone {
     */
     public CallTracker getCallTracker() {
         return null;
+    }
+
+    public AppType getCurrentUiccAppType() {
+        UiccCardApplication currentApp = mUiccApplication.get();
+        if (currentApp != null) {
+            return currentApp.getType();
+        }
+        return AppType.APPTYPE_UNKNOWN;
     }
 
     @Override
