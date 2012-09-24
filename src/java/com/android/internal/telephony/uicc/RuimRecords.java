@@ -70,6 +70,7 @@ public final class RuimRecords extends IccRecords {
     private String mMin;
     private String mHomeSystemId;
     private String mHomeNetworkId;
+    private String mSfEuimid;
 
     // ***** Event Constants
     private static final int EVENT_APP_READY = 1;
@@ -455,6 +456,21 @@ public final class RuimRecords extends IccRecords {
         if (DBG) log("CSIM PRL version=" + mPrlVersion);
     }
 
+    private class EfCsimSfEuimidLoaded implements IccRecordLoaded {
+        public String getEfName() {
+            return "EF_CSIM_SF_EUIMID";
+        }
+        public void onRecordLoaded(AsyncResult ar) {
+            onGetCsimSfEuimidDone(ar);
+        }
+    }
+
+    private void onGetCsimSfEuimidDone(AsyncResult ar) {
+        byte[] data = (byte[]) ar.result;
+        mSfEuimid = IccUtils.bytesToHexString(data);
+        log("CSIM SF_EUIMID is " + mSfEuimid);
+    }
+
     @Override
     public void handleMessage(Message msg) {
         AsyncResult ar;
@@ -685,6 +701,10 @@ public final class RuimRecords extends IccRecords {
                 obtainMessage(EVENT_GET_ICC_RECORD_DONE, new EfCsimEprlLoaded()));
         recordsToLoad++;
 
+        mFh.loadEFTransparent(EF_CSIM_SF_EUIMID,
+                obtainMessage(EVENT_GET_ICC_RECORD_DONE, new EfCsimSfEuimidLoaded()));
+        recordsToLoad++;
+
         if (DBG) log("fetchRuimRecords " + recordsToLoad + " requested: " + recordsRequested);
         // Further records that can be inserted are Operator/OEM dependent
     }
@@ -798,6 +818,10 @@ public final class RuimRecords extends IccRecords {
 
     public String getNid() {
         return mHomeNetworkId;
+    }
+
+    public String getEuimid() {
+        return mSfEuimid;
     }
 
     public boolean getCsimSpnDisplayCondition() {

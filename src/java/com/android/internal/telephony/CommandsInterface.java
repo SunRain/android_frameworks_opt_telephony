@@ -1321,7 +1321,7 @@ public interface CommandsInterface {
      * @param obj: User-defined object to be sent to the handler as a part of event.
      *        ((AsyncResult)Message.obj).userObj will contain this object.
      */
-    void setOnUnsolOemHookRaw(Handler h, int what, Object obj);
+    public void setOnUnsolOemHookRaw(Handler h, int what, Object obj);
 
     /**
      * OEMRIL_ENHANCEMENT
@@ -1330,7 +1330,7 @@ public interface CommandsInterface {
      * @param h: Subscriber identification. Should be the same as it was in
      *           the setOnUnsolOemHookRaw call.
      */
-    void unSetOnUnsolOemHookRaw(Handler h);
+    public void unSetOnUnsolOemHookRaw(Handler h);
 
 
     /**

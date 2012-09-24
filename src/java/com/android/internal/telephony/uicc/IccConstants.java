@@ -42,6 +42,9 @@ public interface IccConstants {
     static final int EF_SST = 0x6f38;
     static final int EF_CFIS = 0x6FCB;
     static final int EF_IMG = 0x4f20;
+    // FIXME-HASH: Added for Motorola
+    static final int EF_SMSP = 0x6f42; // 28482
+    static final String DF_ADFISIM = "7FFF";
 
     // USIM SIM file ids from TS 31.102
     public static final int EF_PBR = 0x4F30;
@@ -68,6 +71,9 @@ public interface IccConstants {
     static final int EF_CSIM_IMSIM = 0x6F22;
     static final int EF_CSIM_CDMAHOME = 0x6F28;
     static final int EF_CSIM_EPRL = 0x6F5A;
+    // FIXME-HASH: Added for Motorola
+    static final int EF_CSIM_SF_EUIMID = 0x6F74;
+    static final int EF_IMSI_M = 0x6F22;
 
     //ISIM access
     static final int EF_IMPU = 0x6f04;

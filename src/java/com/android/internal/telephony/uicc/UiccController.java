@@ -76,6 +76,13 @@ public class UiccController extends Handler {
 
     private static final int EVENT_ICC_STATUS_CHANGED = 1;
     private static final int EVENT_GET_ICC_STATUS_DONE = 2;
+    /* Motorola OEM EVENTS BEGIN */
+    protected static final int EVENT_ICC_ERROR = 17;
+    private static final int EVENT_CHANGE_NETWORK_LOCK_DONE = 18;
+    private static final int EVENT_QUERY_FACILITY_PN_LOCK_DONE = 19;
+    protected static final int EVENT_SIM_STATUS_CHANGED = 101;
+    protected static final int EVENT_RADIO_AVAILABLE = 102;
+    /* Motorola OEM EVENTS END */
 
     private static final Object mLock = new Object();
     private static UiccController mInstance;
@@ -173,6 +180,26 @@ public class UiccController extends Handler {
                     if (DBG) log("Received EVENT_ICC_STATUS_CHANGED, calling getIccCardStatus");
                     mCi.getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE));
                     break;
+/* Motorola OEM EVENTS BEGIN */
+                case EVENT_ICC_ERROR:
+                    Log.e(LOG_TAG, "IccCard[MOTO]::EVENT_ICC_ERROR");
+                   mCi.getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE));
+                    break;
+                case EVENT_CHANGE_NETWORK_LOCK_DONE:
+                    Log.e(LOG_TAG, "IccCard[MOTO]::EVENT_CHANGE_NETWORK_LOCK_DONE");
+                    break;
+                case EVENT_QUERY_FACILITY_PN_LOCK_DONE:
+                    Log.e(LOG_TAG, "IccCard[MOTO]::EVENT_QUERY_FACILITY_PN_LOCK_DONE");
+                   break;
+                case EVENT_SIM_STATUS_CHANGED:
+                    Log.e(LOG_TAG, "IccCard[MOTO]::EVENT_SIM_STATUS_CHANGED");
+                   mCi.getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE));
+                    break;
+               case EVENT_RADIO_AVAILABLE:
+                    Log.e(LOG_TAG, "IccCard[MOTO]::EVENT_RADIO_AVAILABLE");
+                   mCi.getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE));
+                    break;
+/* Motorola OEM EVENTS END */
                 case EVENT_GET_ICC_STATUS_DONE:
                     if (DBG) log("Received EVENT_GET_ICC_STATUS_DONE");
                     AsyncResult ar = (AsyncResult)msg.obj;

@@ -680,8 +680,13 @@ public class IccCardProxy extends Handler implements IccCard {
         synchronized (mLock) {
             if (mUiccCard != null && mUiccCard.getCardState() != CardState.CARDSTATE_ABSENT) {
                 return true;
-            }
+            } else {
+			    // FIXME-HASH: Added Motorola Code
+			if (phone.getPhoneType() == PhoneConstants.PHONE_TYPE_GSM)
+                return mUiccCard.getCardState().isCardPresent();
+            else
             return false;
+            }
         }
     }
 
