@@ -42,6 +42,7 @@ public final class CsimFileHandler extends IccFileHandler implements IccConstant
         case EF_CSIM_LI:
         case EF_CSIM_MDN:
         case EF_CSIM_IMSIM:
+        case EF_CSIM_SF_EUIMID:
         case EF_CSIM_CDMAHOME:
         case EF_CSIM_EPRL:
             return MF_SIM + DF_ADF;

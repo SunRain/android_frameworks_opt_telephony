@@ -48,6 +48,19 @@ public final class RuimFileHandler extends IccFileHandler {
     }
 
     @Override
+    public void loadEFTransparent(int fileid, Message message) {
+        if (fileid == EF_CSIM_EPRL) {
+            Message response = obtainMessage(EVENT_READ_BINARY_DONE, fileid, 0, message);
+
+            /*mCi.iccIOForApp(COMMAND_READ_BINARY, fileid, getEFPath(fileid), 0, 0, */
+            mCi.iccIOForApp(COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
+                READ_RECORD_MODE_ABSOLUTE, null, null, mAid, response);
+        } else {
+            super.loadEFTransparent(fileid, message);
+        }
+    }
+
+    @Override
     protected String getEFPath(int efid) {
 		// Both EF_ADN and EF_CSIM_LI are referring to same constant value 0x6F3A.
         // So cannot derive different paths for them using exisitng logic
@@ -62,9 +75,11 @@ public final class RuimFileHandler extends IccFileHandler {
         case EF_CSIM_LI:
         case EF_CSIM_MDN:
         case EF_CSIM_IMSIM:
+        case EF_CSIM_SF_EUIMID:
         case EF_CSIM_CDMAHOME:
         case EF_CSIM_EPRL:
-            return MF_SIM + DF_CDMA;
+            Log.d(LOG_TAG, "[CsimFileHandler] getEFPath for " + efid);
+            return MF_SIM + DF_ADFISIM;
         case EF_FDN:
         case EF_MSISDN:
             return MF_SIM + DF_TELECOM;
